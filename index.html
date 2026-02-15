@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的数学空间</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 50, 0.12);
+      overflow: hidden;
+    }
+    header {
+      background: linear-gradient(120deg, #1e5799 0%, #207cca 55%, #2989d8 100%);
+      color: white;
+      padding: 40px 30px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, transparent 20%),
+        radial-gradient(circle at 80% 70%, rgba(255,255,255,0.15) 0%, transparent 25%);
+      z-index: 1;
+    }
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 2;
+    }
+    .subtitle {
+      font-size: 1.3rem;
+      opacity: 0.9;
+      margin-top: 8px;
+      position: relative;
+      z-index: 2;
+    }
+    .content {
+      padding: 40px;
+    }
+    section {
+      margin-bottom: 35px;
+    }
+    h2 {
+      font-size: 1.8rem;
+      color: #2c3e50;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #3498db;
+      display: inline-block;
+    }
+    p {
+      margin-bottom: 15px;
+      font-size: 1.05rem;
+    }
+    .math-highlight {
+      background: #f8f9ff;
+      border-left: 4px solid #3498db;
+      padding: 18px 25px;
+      border-radius: 0 8px 8px 0;
+      margin: 25px 0;
+      font-size: 1.2rem;
+    }
+    .interests {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 15px;
+    }
+    .interest-tag {
+      background: #e3f2fd;
+      color: #1976d2;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.95rem;
+      transition: all 0.3s;
+    }
+    .interest-tag:hover {
+      background: #bbdefb;
+      transform: translateY(-2px);
+    }
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #7f8c8d;
+      font-size: 0.95rem;
+      border-top: 1px solid #eee;
+    }
+    @media (max-width: 768px) {
+      .content {
+        padding: 30px 25px;
+      }
+      h1 {
+        font-size: 2.2rem;
+      }
+      .subtitle {
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>张明哲</h1>
+      <div class="subtitle">探索数学之美 · 高中生学习者</div>
+    </header>
+    
+    <div class="content">
+      <section>
+        <h2>关于我</h2>
+        <p>一名热爱数学的高中生，沉迷于公式背后的逻辑与对称之美。目前正在深入学习微积分、线性代数与组合数学，目标是参加全国高中数学联赛。</p>
+        
+        <div class="math-highlight">
+          <p>\[ \int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi} \quad \text{—— 高斯积分，优雅而深刻} \]</p>
+        </div>
+      </section>
+      
+      <section>
+        <h2>兴趣领域</h2>
+        <div class="interests">
+          <span class="interest-tag">数论</span>
+          <span class="interest-tag">组合数学</span>
+          <span class="interest-tag">几何证明</span>
+          <span class="interest-tag">数学建模</span>
+          <span class="interest-tag">算法设计</span>
+          <span class="interest-tag">物理中的数学</span>
+        </div>
+      </section>
+      
+      <section>
+        <h2>近期目标</h2>
+        <p>✓ 掌握生成函数在组合计数中的应用</p>
+        <p>✓ 完成《数学分析教程》前五章习题</p>
+        <p>✓ 研究 RSA 加密算法的数论基础</p>
+      </section>
+      
+      <section>
+        <h2>联系我</h2>
+        <p>📧 math.learner@example.com</p>
+        <p>🐙 GitHub: <a href="https://github.com/yourname" style="color:#3498db;text-decoration:none">github.com/yourname</a></p>
+      </section>
+    </div>
+    
+    <footer>
+      <p>© 2026 数学探索者 | 本页面公式由 MathJax 渲染</p>
+      <p style="margin-top:8px;font-style:italic">"数学是科学的皇后，数论是数学的皇后" —— 高斯</p>
+    </footer>
+  </div>
+</body>
+</html>
