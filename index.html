@@ -1,177 +1,416 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>我的数学空间</title>
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      line-height: 1.6;
-      color: #333;
-      background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
-      min-height: 100vh;
-      padding: 20px;
-    }
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0, 0, 50, 0.12);
-      overflow: hidden;
-    }
-    header {
-      background: linear-gradient(120deg, #1e5799 0%, #207cca 55%, #2989d8 100%);
-      color: white;
-      padding: 40px 30px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    header::before {
-      content: "";
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: 
-        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, transparent 20%),
-        radial-gradient(circle at 80% 70%, rgba(255,255,255,0.15) 0%, transparent 25%);
-      z-index: 1;
-    }
-    h1 {
-      font-size: 2.8rem;
-      margin-bottom: 12px;
-      position: relative;
-      z-index: 2;
-    }
-    .subtitle {
-      font-size: 1.3rem;
-      opacity: 0.9;
-      margin-top: 8px;
-      position: relative;
-      z-index: 2;
-    }
-    .content {
-      padding: 40px;
-    }
-    section {
-      margin-bottom: 35px;
-    }
-    h2 {
-      font-size: 1.8rem;
-      color: #2c3e50;
-      margin-bottom: 20px;
-      padding-bottom: 8px;
-      border-bottom: 2px solid #3498db;
-      display: inline-block;
-    }
-    p {
-      margin-bottom: 15px;
-      font-size: 1.05rem;
-    }
-    .math-highlight {
-      background: #f8f9ff;
-      border-left: 4px solid #3498db;
-      padding: 18px 25px;
-      border-radius: 0 8px 8px 0;
-      margin: 25px 0;
-      font-size: 1.2rem;
-    }
-    .interests {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      margin-top: 15px;
-    }
-    .interest-tag {
-      background: #e3f2fd;
-      color: #1976d2;
-      padding: 6px 16px;
-      border-radius: 20px;
-      font-size: 0.95rem;
-      transition: all 0.3s;
-    }
-    .interest-tag:hover {
-      background: #bbdefb;
-      transform: translateY(-2px);
-    }
-    footer {
-      text-align: center;
-      padding: 25px;
-      color: #7f8c8d;
-      font-size: 0.95rem;
-      border-top: 1px solid #eee;
-    }
-    @media (max-width: 768px) {
-      .content {
-        padding: 30px 25px;
-      }
-      h1 {
-        font-size: 2.2rem;
-      }
-      .subtitle {
-        font-size: 1.1rem;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的数学笔记 | GitHub Pages</title>
+    <style>
+        /* Dark Mode 基础配色 */
+        :root {
+            --bg-color: #1a1a1a;      /* 深灰色背景 */
+            --text-color: #e0e0e0;    /* 浅灰文字 */
+            --light-text: #ffffff;    /* 亮色文字 */
+            --accent-blue: #4a90e2;   /* 主强调色：标题/链接 */
+            --accent-orange: #ffa726; /* 强调提示色：卡片标题 */
+            --accent-purple: #ab47bc; /* 次强调色：小标题 */
+            --card-bg: #252525;       /* 卡片背景 */
+            --border-color: #333333;  /* 分割线颜色 */
+            --link-color: #4a90e2;    /* 链接颜色 */
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* 总体三栏布局 */
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* 左侧：类似 Obsidian 的文件/导航栏 */
+        .sidebar {
+            width: 280px;
+            background-color: #151515;
+            padding: 20px;
+            border-right: 1px solid var(--border-color);
+            overflow-y: auto;
+        }
+        /* 文件夹行样式 */
+        .folder {
+            cursor: pointer;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: background-color 0.2s ease;
+            display: flex;
+            align-items: center;
+            color: var(--text-color);
+            margin: 5px 0;
+        }
+
+        .folder:hover {
+            background-color: #2a2a2a;
+        }
+
+
+        /* 小箭头：控制展开/收起方向 */
+        .dropdown {
+            margin-right: 8px;
+            font-size: 1.2em;
+            display: inline-block;
+            transition: transform 0.2s ease;
+        }
+
+        .dropdown.expanded {
+            transform: rotate(90deg); /* 展开时箭头旋转 */
+        }
+
+        /* 子菜单（折叠/展开的部分） */
+        .submenu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            opacity: 0;
+            max-height: 0;
+            transform: scaleY(0.98);
+            transform-origin: top;
+            background-color: rgba(30, 30, 30, 0.5);
+            border-radius: 4px;
+            padding-left: 10px;
+            transition:
+                opacity 0.18s ease-out,
+                max-height 0.18s ease-out,
+                transform 0.18s ease-out;
+            will-change: opacity, max-height, transform;
+        }
+
+        /* 展开的状态 */
+        .submenu.show {
+            opacity: 1;
+            max-height: 500px;   /* 足够大即可，别写太夸张，有助于减少计算 */
+            transform: scaleY(1);
+        }
+
+        /* 子菜单里的单个条目 */
+        .nav-item {
+            padding: 6px 15px;
+            margin: 3px 0;
+            border-radius: 4px;
+        }
+
+        .nav-item:hover {
+            background-color: var(--accent-blue);
+            color: var(--light-text);
+        }
+
+        .sidebar h1 {
+            color: var(--light-text);
+            font-size: 1.5em;
+            margin-bottom: 30px;
+            font-weight: 600;
+            border-bottom: 1px solid var(--accent-blue);
+            padding-bottom: 10px;
+        }
+
+        .nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-list li {
+            margin-bottom: 15px;
+        }
+
+        .nav-list a {
+            color: var(--text-color);
+            text-decoration: none;
+            display: block;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-list a:hover {
+            background-color: var(--accent-blue);
+            color: var(--light-text);
+            text-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
+        }
+
+        /* 中间：主内容区 */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            max-width: 800px;
+            overflow-y: auto;
+        }
+
+        .main-content h2 {
+            color: var(--accent-blue);
+            margin-top: 30px;
+            margin-bottom: 20px;
+            font-size: 2em;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .main-content h3 {
+            color: var(--accent-purple);
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .main-content p {
+            margin-bottom: 15px;
+        }
+
+        /* 右侧：目录栏（快速导航） */
+        .toc {
+            width: 250px;
+            padding: 20px;
+            background-color: #151515;
+            border-left: 1px solid var(--border-color);
+            overflow-y: auto;
+        }
+
+        .toc h2 {
+            color: var(--light-text);
+            font-size: 1.3em;
+            margin-bottom: 20px;
+        }
+
+        .toc-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .toc-list li {
+            margin-bottom: 8px;
+        }
+
+        .toc-list a {
+            display: block;
+            color: var(--accent-blue);
+            text-decoration: none;
+            padding: 4px 0;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+        }
+
+        .toc-list a:hover {
+            color: var(--accent-orange);
+            text-shadow: 0 0 5px rgba(255, 167, 38, 0.4);
+        }
+
+        /* 卡片式模块，模拟 Obsidian 的折叠/提示块 */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+        }
+
+        .card-header {
+            color: var(--accent-orange);
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .card-header::before {
+            content: "⚠";
+            margin-right: 10px;
+            font-size: 1.3em;
+        }
+
+        /* 链接样式（全局） */
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* 响应式：屏幕较窄时改成上下结构 */
+        @media (max-width: 1024px) {
+            .container {
+                flex-direction: column;
+            }
+            .sidebar, .toc {
+                width: 100%;
+                border: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            .toc {
+                border-top: 1px solid var(--border-color);
+            }
+        }
+    </style>
 </head>
+<script>
+    function toggleMenu(menuId) {
+        const menu = document.getElementById(menuId);
+        if (!menu) return;
+
+        const folder = menu.previousElementSibling;
+        const dropdown = folder ? folder.querySelector('.dropdown') : null;
+
+        // 为了避免快速连点导致抖动，这里简单做个“节流开关”
+        if (menu._animating) return;
+        menu._animating = true;
+
+        const isOpen = menu.classList.contains('show');
+
+        // 切换展开/收起状态
+        if (isOpen) {
+            menu.classList.remove('show');
+            if (dropdown) dropdown.classList.remove('expanded');
+        } else {
+            menu.classList.add('show');
+            if (dropdown) dropdown.classList.add('expanded');
+        }
+
+        // 动画结束后解除锁定（时间要和 CSS transition 时长一致或略长）
+        setTimeout(() => {
+            menu._animating = false;
+        }, 220);
+    }
+
+    // 页面加载后：默认展开第一个文件夹（比如微积分）
+    document.addEventListener('DOMContentLoaded', function () {
+        const firstMenu = document.querySelector('.submenu');
+        if (firstMenu) {
+            firstMenu.classList.add('show');
+            const firstFolder = firstMenu.previousElementSibling;
+            const dropdown = firstFolder ? firstFolder.querySelector('.dropdown') : null;
+            if (dropdown) dropdown.classList.add('expanded');
+        }
+    });
+</script>
 <body>
-  <div class="container">
-    <header>
-      <h1>张明哲</h1>
-      <div class="subtitle">探索数学之美 · 高中生学习者</div>
-    </header>
-    
-    <div class="content">
-      <section>
-        <h2>关于我</h2>
-        <p>一名热爱数学的高中生，沉迷于公式背后的逻辑与对称之美。目前正在深入学习微积分、线性代数与组合数学，目标是参加全国高中数学联赛。</p>
+    <div class="container">
+        <!-- 左侧导航栏 -->
+        <aside class="sidebar">
+            <h1>数学笔记</h1>
+            <!-- 首页：单独一个项 -->
+            <div class="nav-item" style="margin-top: 20px;">
+                <a href="index.html">首页</a>
+            </div>
+            <!-- 微积分 文件夹 -->
+            <div class="folder" onclick="toggleMenu('calculusMenu')">
+                <span class="dropdown">▸</span>微积分
+            </div>
+            <ul id="calculusMenu" class="submenu">
+                <li class="nav-item"><a href="calculus.html">微积分基础</a></li>
+                <li class="nav-item"><a href="derivatives.html">导数与微分</a></li>
+                <li class="nav-item"><a href="integrals.html">积分</a></li>
+                <li class="nav-item"><a href="multivariable.html">多元微积分</a></li>
+            </ul>
         
-        <div class="math-highlight">
-          <p>\[ \int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi} \quad \text{—— 高斯积分，优雅而深刻} \]</p>
-        </div>
-      </section>
-      
-      <section>
-        <h2>兴趣领域</h2>
-        <div class="interests">
-          <span class="interest-tag">数论</span>
-          <span class="interest-tag">组合数学</span>
-          <span class="interest-tag">几何证明</span>
-          <span class="interest-tag">数学建模</span>
-          <span class="interest-tag">算法设计</span>
-          <span class="interest-tag">物理中的数学</span>
-        </div>
-      </section>
-      
-      <section>
-        <h2>近期目标</h2>
-        <p>✓ 掌握生成函数在组合计数中的应用</p>
-        <p>✓ 完成《数学分析教程》前五章习题</p>
-        <p>✓ 研究 RSA 加密算法的数论基础</p>
-      </section>
-      
-      <section>
-        <h2>联系我</h2>
-        <p>📧 math.learner@example.com</p>
-        <p>🐙 GitHub: <a href="https://github.com/yourname" style="color:#3498db;text-decoration:none">github.com/yourname</a></p>
-      </section>
+            <!-- 代数 文件夹 -->
+            <div class="folder" onclick="toggleMenu('algebraMenu')">
+                <span class="dropdown">▸</span>代数
+            </div>
+            <ul id="algebraMenu" class="submenu">
+                <li class="nav-item"><a href="linear_algebra.html">线性代数</a></li>
+                <li class="nav-item"><a href="abstract_algebra.html">抽象代数</a></li>
+                <li class="nav-item"><a href="algebraic_structures.html">代数结构</a></li>
+            </ul>
+        
+            <!-- 几何 文件夹 -->
+            <div class="folder" onclick="toggleMenu('geometryMenu')">
+                <span class="dropdown">▸</span>几何
+            </div>
+            <ul id="geometryMenu" class="submenu">
+                <li class="nav-item"><a href="euclidean.html">欧几里得几何</a></li>
+                <li class="nav-item"><a href="non_euclidean.html">非欧几何</a></li>
+                <li class="nav-item"><a href="topology.html">拓扑学</a></li>
+                <li class="nav-item"><a href="differential_geometry.html">微分几何</a></li>
+            </ul>
+        
+            <!-- 数学理论 文件夹 -->
+            <div class="folder" onclick="toggleMenu('theoryMenu')">
+                <span class="dropdown">▸</span>数学理论
+            </div>
+            <ul id="theoryMenu" class="submenu">
+                <li class="nav-item"><a href="number_theory.html">数论</a></li>
+                <li class="nav-item"><a href="probability.html">概率论</a></li>
+                <li class="nav-item"><a href="analysis.html">实分析</a></li>
+                <li class="nav-item"><a href="set_theory.html">集合论</a></li>
+            </ul>
+        
+        </aside>
+
+        <!-- 中间主内容 -->
+        <main class="main-content">
+            <h2>Journey to the Maths</h2>
+            <p>欢迎来到我的个人主页！这里记录了我在数学领域中的探索与思考。</p>
+            
+            <div class="card">
+                <div class="card-header">学习目标</div>
+                <p>通过这个站点，我整理和分享我对各个数学分支的理解，比如微积分、线性代数、数论、几何等。</p>
+                <p>同时，我也会把自己在 GitHub 上做的一些小项目、实验性想法集中在这里，方便回顾与改进。</p>
+            </div>
+
+            <h3 id="calculus">微积分笔记</h3>
+            <p>目前主要在学习单变量和多变量微积分，关注函数、极限、连续、导数与积分等基础概念，并尝试用图形/直观的方式去理解。</p>
+            <div class="card">
+                <div class="card-header">核心概念</div>
+                <p>导数：描述函数在某一点附近的瞬时变化率，可以理解为“切线斜率”。</p>
+                <p>积分：描述某个量的累积效果，比如曲线下的面积，可以看成是“无穷小求和”的极限。</p>
+            </div>
+
+            <h3 id="algebra">代数探索</h3>
+            <p>代数部分主要包括线性代数和一些抽象代数的入门内容，比如向量空间、线性变换、矩阵、群论基础等。</p>
+            <div class="card">
+                <div class="card-header">线性代数要点</div>
+                <p>矩阵运算：包括矩阵乘法、逆矩阵、行列式等，是线性变换的代数表示。</p>
+                <p>向量空间：讨论“向量”的线性组合、基底、维度以及用矩阵表达的变换。</p>
+            </div>
+
+            <h3 id="geometry">几何世界</h3>
+            <p>从直观的欧几里得几何，到更抽象的非欧几何、拓扑学，我会记录理解过程中的一些关键想法和图形化理解。</p>
+            <div class="card">
+                <div class="card-header">几何思想</div>
+                <p>空间关系与对称性：通过几何变换（旋转、平移、反射等）来理解图形背后的不变性。</p>
+                <p>几何与物理：比如广义相对论用“弯曲的时空几何”来描述引力，本质上也是一种几何语言。</p>
+            </div>
+
+            <h3 id="theory">一些数学理论碎片</h3>
+            <p>这一部分可以放一些暂时还没有系统整理的内容，比如数论中的小问题、概率论里的有趣例子等。</p>
+
+            <h3 id="about">关于我</h3>
+            <p>一名热爱数学的学习者，正在慢慢把零散的想法整理成系统的笔记。这个站点既是我的学习记录，也希望以后能成为和其他数学爱好者交流的小空间。</p>
+            <p>想了解更详细的背景和经历，请访问独立的
+                <a href="about.html" >关于我页面</a>。
+            </p>
+        </main>
+
+        <!-- 右侧快速导航 -->
+        <aside class="toc">
+            <h2>快速导航</h2>
+            <ul class="toc-list">
+                <!-- 把下面这个链接改成你这个页面的 GitHub 仓库地址 -->
+                <li><a href="https://github.com/amh488/amh488.github.io" target="_blank">GitHub 项目</a></li>
+		<!-- 把下面这个链接改成你这个页面的 超理论坛地址 -->
+                <li><a href="https://chaoli.club/index.php/member/14131" target="_blank">超理主页</a></li>
+                <!-- 关于我：跳转到你用 Obsidian 导出的 about.html -->
+                <li><a href="about.html" >关于我</a></li>
+            </ul>
+        </aside>
     </div>
-    
-    <footer>
-      <p>© 2026 数学探索者 | 本页面公式由 MathJax 渲染</p>
-      <p style="margin-top:8px;font-style:italic">"数学是科学的皇后，数论是数学的皇后" —— 高斯</p>
-    </footer>
-  </div>
 </body>
 </html>
